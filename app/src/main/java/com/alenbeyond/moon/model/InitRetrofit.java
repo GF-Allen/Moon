@@ -32,14 +32,12 @@ public class InitRetrofit {
      *  RxJava
      *  HttpClient
      *  Gson
-     * @param sessionId
      */
-    public InitRetrofit(String sessionId) {
+    public InitRetrofit() {
 
         client = new Retrofit.Builder()
                 .baseUrl(Url.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//返回增加对RxJava的支持
-                .client(getOkHttpClient(sessionId))//设置依赖的HttpClient
                 .addConverterFactory(GsonConverterFactory.create())//返回的对象序列化使用Gson
                 .build();
     }

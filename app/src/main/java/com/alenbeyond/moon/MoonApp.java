@@ -2,7 +2,6 @@ package com.alenbeyond.moon;
 
 import android.app.Application;
 
-import com.alenbeyond.moon.model.AppBaseCache;
 import com.alenbeyond.moon.model.InitRetrofit;
 import com.socks.library.KLog;
 
@@ -32,8 +31,7 @@ public class MoonApp extends Application {
 
     private static InitRetrofit getRetrofitClient() {
         if (initRetrofit == null) {
-            String sessionId = AppBaseCache.getInstance(sMoonApp).getSessionId();
-            initRetrofit = new InitRetrofit(sessionId);
+            initRetrofit = new InitRetrofit();
         }
         return initRetrofit;
     }

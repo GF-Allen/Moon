@@ -14,7 +14,7 @@ import com.alenbeyond.moon.base.view.BaseFragment;
  * Created by allen on 2017/4/13.
  */
 
-public class OfficeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
