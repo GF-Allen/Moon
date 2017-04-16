@@ -75,8 +75,8 @@ public class MainActivity extends BaseActivity {
             }
         });
         MoonFragmentPagerAdapter adapter = new MoonFragmentPagerAdapter(getFragmentManager(), mTitles);
-        adapter.addFragment(new Fragment());
         adapter.addFragment(new HomeFragment());
+        adapter.addFragment(new DiscoverFragment());
         adapter.addFragment(new Fragment());
         mVpContent.setAdapter(adapter);
     }

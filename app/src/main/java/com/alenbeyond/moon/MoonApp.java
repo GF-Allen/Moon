@@ -29,7 +29,7 @@ public class MoonApp extends Application {
         KLog.init(BuildConfig.DEBUG, "Moon");
     }
 
-    private static InitRetrofit getRetrofitClient() {
+    public static InitRetrofit getRetrofitClient() {
         if (initRetrofit == null) {
             initRetrofit = new InitRetrofit();
         }

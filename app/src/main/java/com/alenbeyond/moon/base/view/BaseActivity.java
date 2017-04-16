@@ -105,12 +105,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     /**
      * 自定义左侧按钮
+     *
      * @param title
      * @param leftId
      * @param leftClickListener
      */
-    public void initTitlrBar(String title, @DrawableRes int leftId, View.OnClickListener leftClickListener){
-        initTitleBar(true,title);
+    public void initTitlrBar(String title, @DrawableRes int leftId, View.OnClickListener leftClickListener) {
+        initTitleBar(true, title);
         LinearLayout ll_right = (LinearLayout) findViewById(R.id.ll_right);
         ll_right.removeAllViews();
         ImageButton ibBack = (ImageButton) findViewById(R.id.ib_back);
@@ -160,12 +161,31 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     /**
      * 修改标题
+     *
      * @param title
      */
     public void changeTitle(String title) {
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(title);
     }
+
+    /**
+     * 隐藏TitleBar
+     */
+    public void hideTitleBar() {
+        LinearLayout titleBar = (LinearLayout) findViewById(R.id.title_bar);
+        titleBar.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示TitleBar
+     */
+    public void showTitleBar(){
+        LinearLayout titleBar = (LinearLayout) findViewById(R.id.title_bar);
+        titleBar.setVisibility(View.VISIBLE);
+    }
+
+
 
     protected void startActivityNoValue(Context context, Class<?> clazz) {
         Intent intent = new Intent(context, clazz);

@@ -24,5 +24,8 @@ public class Constants {
 
     //常量
     public static final String COOKIE = "Cookie";
+    public static final String APP_ID = "App-Id";
+    public static final String API_VERSION = "Api-Version";
+    public static final String USER_AGENT = "User-Agent";
 
 }

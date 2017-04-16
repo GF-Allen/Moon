@@ -10,7 +10,6 @@ import com.alenbeyond.moon.R;
 import com.alenbeyond.moon.base.view.BaseFragment;
 
 /**
- *
  * Created by allen on 2017/4/13.
  */
 

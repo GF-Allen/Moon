@@ -1,10 +1,8 @@
 package com.alenbeyond.moon.model;
 
-import android.text.TextUtils;
-
 import com.alenbeyond.moon.constants.Constants;
 import com.alenbeyond.moon.constants.Url;
-import com.socks.library.KLog;
+import com.alenbeyond.moon.model.netadpi.ServiceApi;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +18,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- *
  * Created by allen on 2017/4/12.
  */
 
@@ -29,31 +26,33 @@ public class InitRetrofit {
     private final Retrofit client;
 
     /**
-     *  RxJava
-     *  HttpClient
-     *  Gson
+     * RxJava
+     * HttpClient
+     * Gson
      */
     public InitRetrofit() {
 
         client = new Retrofit.Builder()
                 .baseUrl(Url.BASE_URL)
+                .client(getOkHttpClient())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//返回增加对RxJava的支持
                 .addConverterFactory(GsonConverterFactory.create())//返回的对象序列化使用Gson
                 .build();
     }
 
-    private OkHttpClient getOkHttpClient(final String sessionId) {
-        KLog.d("sessionId:" + sessionId);
+    private OkHttpClient getOkHttpClient() {
         OkHttpClient.Builder newBuilder = new OkHttpClient().newBuilder();
-        if (!TextUtils.isEmpty(sessionId)) {
-            Interceptor requestInterceptor = new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    return chain.proceed(chain.request().newBuilder().addHeader(Constants.COOKIE, sessionId).build());
-                }
-            };
-            newBuilder.addInterceptor(requestInterceptor);
-        }
+        Interceptor requestInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                return chain.proceed(chain.request().newBuilder()
+                        .header(Constants.APP_ID, "2")
+                        .header(Constants.API_VERSION, "1")
+                        .header(Constants.USER_AGENT, "dev++ Android App 1.8.0")
+                        .build());
+            }
+        };
+        newBuilder.addInterceptor(requestInterceptor);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         newBuilder.addInterceptor(loggingInterceptor);
@@ -63,5 +62,9 @@ public class InitRetrofit {
         newBuilder.readTimeout(Constants.NET_TIMEOUT_120, TimeUnit.SECONDS);
         newBuilder.writeTimeout(Constants.NET_TIMEOUT_600, TimeUnit.SECONDS);
         return newBuilder.build();
+    }
+
+    public ServiceApi getServiceApi() {
+        return client.create(ServiceApi.class);
     }
 }

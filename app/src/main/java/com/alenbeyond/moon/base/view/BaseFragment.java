@@ -1,5 +1,6 @@
 package com.alenbeyond.moon.base.view;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,7 +17,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- *
  * Created by allen on 2017/4/11.
  */
 public abstract class BaseFragment extends Fragment implements IBaseView {
@@ -27,9 +27,9 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     private Unbinder unbinder;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = context;
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity;
     }
 
     protected View createView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @LayoutRes int layoutId) {

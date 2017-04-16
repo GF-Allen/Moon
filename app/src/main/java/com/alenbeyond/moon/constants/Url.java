@@ -5,5 +5,5 @@ package com.alenbeyond.moon.constants;
  */
 
 public class Url {
-    public static final String BASE_URL = "https://www.baidu.com"; // TODO: 2017/4/12
+    public static final String BASE_URL = "http://www.10tiao.com";
 }
