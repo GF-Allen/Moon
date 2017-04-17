@@ -23,30 +23,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alenbeyond.moon.R;
+import com.alenbeyond.moon.utils.ToastUtils;
 import com.alenbeyond.moon.utils.UiUtils;
 import com.jaeger.library.StatusBarUtil;
 
 import butterknife.ButterKnife;
 
 /**
- * 1.startActivityNoValue  跳转到下一个activity不带传值
- * 2.getToast 获得Toast，时间为短。
- * 3.SimpleProgeDialog 简单的全屏滚动进度条
- * 4.isNull 判断字符是否为null或为空
- * 5.initToolBar 初始化toolbar
- * <p>
  * Created by allen on 2017/4/12.
  */
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
 
-    protected static int TAG_TITLE_VIEW = 10000;
-
     protected Context mContext;
-    private static Toast toast;
-    private String titleName;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -180,11 +170,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     /**
      * 显示TitleBar
      */
-    public void showTitleBar(){
+    public void showTitleBar() {
         LinearLayout titleBar = (LinearLayout) findViewById(R.id.title_bar);
         titleBar.setVisibility(View.VISIBLE);
     }
-
 
 
     protected void startActivityNoValue(Context context, Class<?> clazz) {
@@ -254,21 +243,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         return false;
     }
 
-    public String getTitleName() {
-        return titleName;
-    }
-
-    public void setTitleName(String titleName) {
-        this.titleName = titleName;
-    }
-
     protected void showToastMessage(String message) {
         if (!TextUtils.isEmpty(message)) {
-            if (toast == null) {
-                toast = Toast.makeText(mContext, "", Toast.LENGTH_SHORT);
-            }
-            toast.setText(message);
-            toast.show();
+            ToastUtils.showShortToast(this, message);
         }
     }
 
@@ -300,25 +277,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
                     hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-    }
-
-    private TextView getTextView(int resource) {
-        TextView tv = new TextView(this);
-        tv.setText(resource);
-        tv.setTextColor(getResources().getColor(R.color.color444));
-        tv.setTextSize(18);
-        return tv;
-    }
-
-    private TextView getTextView(String resource) {
-        TextView tv = new TextView(this);
-        tv.setText(resource);
-        tv.setTextColor(getResources().getColor(R.color.color444));
-        tv.setTextSize(18);
-        tv.setMaxEms(6);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        tv.setSingleLine();
-        return tv;
     }
 
 }

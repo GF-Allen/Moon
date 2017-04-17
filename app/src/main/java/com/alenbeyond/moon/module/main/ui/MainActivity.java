@@ -1,6 +1,5 @@
 package com.alenbeyond.moon.module.main.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -77,7 +76,7 @@ public class MainActivity extends BaseActivity {
         MoonFragmentPagerAdapter adapter = new MoonFragmentPagerAdapter(getFragmentManager(), mTitles);
         adapter.addFragment(new HomeFragment());
         adapter.addFragment(new DiscoverFragment());
-        adapter.addFragment(new Fragment());
+        adapter.addFragment(new CollectFragment());
         mVpContent.setAdapter(adapter);
     }
 }

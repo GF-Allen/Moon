@@ -2,7 +2,6 @@ package com.alenbeyond.moon.module.main.model;
 
 import com.alenbeyond.moon.MoonApp;
 import com.alenbeyond.moon.model.bean.Channel;
-import com.alenbeyond.moon.module.main.bean.DiscoverChannel;
 
 import java.util.List;
 
@@ -27,29 +26,21 @@ public class DiscoverModel {
         return sDiscoverModel;
     }
 
-    public Observable<DiscoverChannel> getChannel() {
+    public Observable<List<Channel.ChannelListBean.ChannelBeans>> getChannel() {
         return MoonApp.getRetrofitClient().getServiceApi().getChannel()
                 .flatMap(new Func1<Response<Channel>, Observable<Channel>>() {
                     @Override
                     public Observable<Channel> call(Response<Channel> response) {
-                        if (response.code() == 200) {
+                        if (response.isSuccessful()) {
                             return Observable.just(response.body());
                         }
                         return null;
                     }
                 })
-                .map(new Func1<Channel, DiscoverChannel>() {
+                .map(new Func1<Channel, List<Channel.ChannelListBean.ChannelBeans>>() {
                     @Override
-                    public DiscoverChannel call(Channel channel) {
-                        DiscoverChannel discoverChannel = new DiscoverChannel();
-                        List<Channel.ChannelListBean.ChannelBeans> list = channel.getChannelListBean().getChannelBeans();
-                        String[] titles = new String[list.size()];
-                        for (int i = 0; i < list.size(); i++) {
-                            titles[i] = list.get(i).getChannelName();
-                        }
-                        discoverChannel.setChannels(list);
-                        discoverChannel.setTitles(titles);
-                        return discoverChannel;
+                    public List<Channel.ChannelListBean.ChannelBeans> call(Channel channel) {
+                        return channel.getChannelListBean().getChannelBeans();
                     }
                 })
                 .subscribeOn(Schedulers.io())

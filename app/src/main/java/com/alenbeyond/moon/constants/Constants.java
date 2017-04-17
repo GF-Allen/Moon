@@ -11,7 +11,7 @@ import java.io.File;
 public class Constants {
 
     //路径
-    public static final String BASE_PATH = Environment.getExternalStorageDirectory().getPath() + File.separator + "ChinaJes" + File.separator;
+    public static final String BASE_PATH = Environment.getExternalStorageDirectory().getPath() + File.separator + "Moon" + File.separator;
 
     public static final String NET_CATCH_DIR = BASE_PATH + File.separator + ".netcatch";
 
@@ -23,7 +23,6 @@ public class Constants {
     public static final int NET_CATCH_SIZE_52428800 = 52428800;
 
     //常量
-    public static final String COOKIE = "Cookie";
     public static final String APP_ID = "App-Id";
     public static final String API_VERSION = "Api-Version";
     public static final String USER_AGENT = "User-Agent";

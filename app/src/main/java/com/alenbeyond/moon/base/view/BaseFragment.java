@@ -26,6 +26,8 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     public Context mContext;
     private Unbinder unbinder;
 
+    protected boolean isVisible;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -36,6 +38,33 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         final View fragmentView = inflater.inflate(layoutId, container, false);
         unbinder = ButterKnife.bind(this, fragmentView);
         return fragmentView;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+
+    /**
+     * 可见
+     */
+    protected void onVisible() {
+
+    }
+
+
+    /**
+     * 不可见
+     */
+    protected void onInvisible() {
+
     }
 
     @Override

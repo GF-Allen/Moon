@@ -2,7 +2,7 @@ package com.alenbeyond.moon.model;
 
 import com.alenbeyond.moon.constants.Constants;
 import com.alenbeyond.moon.constants.Url;
-import com.alenbeyond.moon.model.netadpi.ServiceApi;
+import com.alenbeyond.moon.model.netapi.ServiceApi;
 
 import java.io.File;
 import java.io.IOException;

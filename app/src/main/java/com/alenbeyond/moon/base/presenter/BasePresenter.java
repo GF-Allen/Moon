@@ -11,7 +11,7 @@ import rx.subscriptions.CompositeSubscription;
  * 辅助presenter类，实现一些通用的方法（不涉及加载数据）
  */
 
-public abstract class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
+public class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
 
     protected V mView;
     protected CompositeSubscription mSubscriptions;//包装所有的订阅者，便于做生命周期的管理
@@ -36,5 +36,7 @@ public abstract class BasePresenter<V extends IBaseView> implements IBasePresent
         this.mView = null;
     }
 
-    public abstract void unSubscribe();
+    public void unSubscribe() {
+        mSubscriptions.unsubscribe();
+    }
 }

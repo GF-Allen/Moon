@@ -10,10 +10,10 @@ import com.alenbeyond.moon.R;
 import com.alenbeyond.moon.base.view.BaseFragment;
 
 /**
- * Created by allen on 2017/4/13.
+ * Created by Allen on 2017/4/17.
  */
 
-public class HomeFragment extends BaseFragment {
+public class CollectFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
