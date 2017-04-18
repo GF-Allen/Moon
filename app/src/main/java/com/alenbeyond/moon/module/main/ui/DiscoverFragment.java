@@ -31,6 +31,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
     ViewPager mVpDiscover;
 
     private DiscoverPresenter mDiscoverPresenter;
+    private VpDiscoverAdapter mAdapter;
 
     @Nullable
     @Override
@@ -38,18 +39,40 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
         View view = createView(inflater, container, R.layout.fragment_discover);
         mDiscoverPresenter = new DiscoverPresenter();
         mDiscoverPresenter.attachView(this);
+        initView();
         return view;
+    }
+
+    private void initView() {
+        mVpDiscover.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Channel.ChannelListBean.ChannelBeans item = mAdapter.getItem(position);
+                ChannelPager pager = (ChannelPager) mVpDiscover.getChildAt(position);
+                pager.setChannelBeans(item);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDiscoverPresenter.getChannel();
     }
 
     @Override
     protected void onVisible() {
         ((MainActivity) getActivity()).hideTitleBar();
+        mDiscoverPresenter.getChannel();
     }
 
     @Override
@@ -60,9 +83,11 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
 
     @Override
     public void showChannel(List<Channel.ChannelListBean.ChannelBeans> channels) {
-        VpDiscoverAdapter adapter = new VpDiscoverAdapter(mContext, channels);
-        mVpDiscover.setAdapter(adapter);
+        mAdapter = new VpDiscoverAdapter(mContext, channels);
+        mVpDiscover.setOffscreenPageLimit(channels.size());
+        mVpDiscover.setAdapter(mAdapter);
         mTab.setupWithViewPager(mVpDiscover);
+        ((ChannelPager) mVpDiscover.getChildAt(0)).setChannelBeans(channels.get(0));
     }
 
 }

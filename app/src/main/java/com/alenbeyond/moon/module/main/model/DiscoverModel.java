@@ -5,7 +5,6 @@ import com.alenbeyond.moon.model.bean.Channel;
 
 import java.util.List;
 
-import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -28,15 +27,15 @@ public class DiscoverModel {
 
     public Observable<List<Channel.ChannelListBean.ChannelBeans>> getChannel() {
         return MoonApp.getRetrofitClient().getServiceApi().getChannel()
-                .flatMap(new Func1<Response<Channel>, Observable<Channel>>() {
-                    @Override
-                    public Observable<Channel> call(Response<Channel> response) {
-                        if (response.isSuccessful()) {
-                            return Observable.just(response.body());
-                        }
-                        return null;
-                    }
-                })
+//                .flatMap(new Func1<Response<Channel>, Observable<Channel>>() {
+//                    @Override
+//                    public Observable<Channel> call(Response<Channel> response) {
+//                        if (response.isSuccessful()) {
+//                            return Observable.just(response.body());
+//                        }
+//                        return null;
+//                    }
+//                })
                 .map(new Func1<Channel, List<Channel.ChannelListBean.ChannelBeans>>() {
                     @Override
                     public List<Channel.ChannelListBean.ChannelBeans> call(Channel channel) {

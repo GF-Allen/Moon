@@ -22,6 +22,11 @@ public class Constants {
 
     public static final int NET_CATCH_SIZE_52428800 = 52428800;
 
+    //过期时间
+    public static final long EXPIRATION_2 = 2 * 1000 * 60;
+    public static final long EXPIRATION_5 = 5 * 1000 * 60;
+    public static final long EXPIRATION_10 = 10 * 1000 * 60;
+
     //常量
     public static final String APP_ID = "App-Id";
     public static final String API_VERSION = "Api-Version";

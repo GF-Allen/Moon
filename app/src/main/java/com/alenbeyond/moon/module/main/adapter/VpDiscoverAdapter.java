@@ -24,6 +24,10 @@ public class VpDiscoverAdapter extends PagerAdapter {
         this.mDatas = mDatas;
     }
 
+    public Channel.ChannelListBean.ChannelBeans getItem(int position) {
+        return mDatas.get(position);
+    }
+
     @Override
     public int getCount() {
         return mDatas.size();
@@ -36,9 +40,7 @@ public class VpDiscoverAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Channel.ChannelListBean.ChannelBeans channelBeans = mDatas.get(position);
         ChannelPager channelPager = new ChannelPager(mContext);
-        channelPager.setChannelBeans(channelBeans);
         container.addView(channelPager);
         return channelPager;
     }

@@ -19,7 +19,7 @@ public interface ServiceApi {
      * @return
      */
     @GET("/splash/splash.api")
-    Observable<Response<Channel>> getChannel();
+    Observable<Channel> getChannel();
 
     /**
      * 获取文章列表

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,13 +32,18 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
 
     @BindView(R.id.rv_channel)
     RecyclerView mRvChannel;
+    @BindView(R.id.srl_loading)
+    SwipeRefreshLayout mSrlLoading;
 
     private Context mContext;
     private ProgressDialog mProgressDialog;
 
-    private Channel.ChannelListBean.ChannelBeans mChannelBeans;
     private ChannelPresenter mPresenter;
     private RvChannelAdapter mAdapter;
+
+    private boolean isLoadMore = false;
+
+    private Channel.ChannelListBean.ChannelBeans mChannel;
 
     public ChannelPager(Context context) {
         super(context);
@@ -50,14 +56,25 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
         ButterKnife.bind(view);
         mPresenter = new ChannelPresenter();
         mPresenter.attachView(this);
+        mSrlLoading.setColorSchemeResources(R.color.google_blue,
+                R.color.google_green,
+                R.color.google_red,
+                R.color.google_yellow);
+        mSrlLoading.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadData(isLoadMore, mChannel.getChannel(), -1);
+            }
+        });
+
         mRvChannel.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new RvChannelAdapter(mContext);
         mRvChannel.setAdapter(mAdapter);
     }
 
     public void setChannelBeans(Channel.ChannelListBean.ChannelBeans channelBeans) {
-        this.mChannelBeans = channelBeans;
-        mPresenter.loadData(channelBeans.getChannel(), -1);
+        this.mChannel = channelBeans;
+        mPresenter.loadData(isLoadMore, channelBeans.getChannel(), -1);
     }
 
     @Override
@@ -99,7 +116,36 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
     }
 
     @Override
-    public void showData(List<News.NewsListBean> newsList) {
-        mAdapter.addData(newsList);
+    public void showData(List<News.NewsListBean> newsList, boolean isLoadMore) {
+        if (isLoadMore) {
+            mAdapter.addData(newsList);
+        } else {
+            mAdapter.setObjectList(newsList);
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        mSrlLoading.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        mSrlLoading.setRefreshing(false);
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
+    }
+
+    @Override
+    public void halfwayStop() {
+
     }
 }

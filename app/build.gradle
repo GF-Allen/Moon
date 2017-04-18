@@ -76,7 +76,7 @@ dependencies {
      */
     compile "com.jaeger.statusbaruitl:library:${libs.statusBartUtils}"
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support.constraint:constraint-layout:${libs.constraint_layout}"
     testCompile 'junit:junit:4.12'
 }
 

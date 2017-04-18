@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(new HomeFragment());
         adapter.addFragment(new DiscoverFragment());
         adapter.addFragment(new CollectFragment());
+        mVpContent.setOffscreenPageLimit(3);
         mVpContent.setAdapter(adapter);
     }
 }

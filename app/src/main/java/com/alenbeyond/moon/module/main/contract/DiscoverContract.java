@@ -15,7 +15,7 @@ public class DiscoverContract {
         void showChannel(List<Channel.ChannelListBean.ChannelBeans> channels);
     }
 
-    public interface Presenter<V extends IBaseView> extends IBasePresenter<V> {
+    public interface Presenter extends IBasePresenter<View> {
         void getChannel();
     }
 }

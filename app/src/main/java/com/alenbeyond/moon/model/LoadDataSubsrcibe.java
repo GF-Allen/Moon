@@ -1,38 +1,37 @@
 package com.alenbeyond.moon.model;
 
-import com.alenbeyond.moon.base.presenter.BasePresenter;
-import com.alenbeyond.moon.base.view.IBaseView;
+import com.alenbeyond.moon.base.presenter.BaseLoadDataPresenter;
+import com.alenbeyond.moon.base.view.ILoadDataView;
 
 import rx.Subscriber;
 
 /**
- * Created by Allen on 2017/4/14.
+ * Created by Allen on 2017/4/18.
  */
 
-public abstract class MoonSubscribe<T> extends Subscriber<T> {
+public abstract class LoadDataSubsrcibe<T> extends Subscriber<T> {
+    private BaseLoadDataPresenter mPresenter;
+    private ILoadDataView mView;
 
-    private BasePresenter mPresenter;
-    private IBaseView mView;
-
-    public MoonSubscribe(BasePresenter presenter, IBaseView view) {
+    public LoadDataSubsrcibe(BaseLoadDataPresenter presenter, ILoadDataView view) {
         this.mView = view;
         this.mPresenter = presenter;
     }
 
     @Override
     public void onStart() {
-        mView.showProgressDialog(null, "");
+        mView.showLoading();
     }
 
     @Override
     public void onCompleted() {
-        mView.dismissProgressDialog();
+        mView.hideLoading();
     }
 
     @Override
     public void onError(Throwable e) {
         mView.showMessage(e.getMessage());
-        mView.dismissProgressDialog();
+        mView.hideLoading();
     }
 
     @Override
@@ -42,5 +41,4 @@ public abstract class MoonSubscribe<T> extends Subscriber<T> {
     }
 
     public abstract void onJesNext(T t);
-
 }

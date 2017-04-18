@@ -1,7 +1,7 @@
 package com.alenbeyond.moon.module.main.contract;
 
-import com.alenbeyond.moon.base.presenter.IBasePresenter;
-import com.alenbeyond.moon.base.view.IBaseView;
+import com.alenbeyond.moon.base.presenter.ILoadDataPresenter;
+import com.alenbeyond.moon.base.view.ILoadDataView;
 import com.alenbeyond.moon.model.bean.News;
 
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.List;
  */
 
 public class ChannelContract {
-    public interface View extends IBaseView {
-        void showData(List<News.NewsListBean> newsList);
+    public interface View extends ILoadDataView {
+        void showData(List<News.NewsListBean> newsList, boolean isLoadMore);
     }
 
-    public interface Presenter extends IBasePresenter<View> {
-        void loadData(int channel, int fromNewsId);
+    public interface Presenter extends ILoadDataPresenter<View> {
+        void loadData(boolean loadMore, int channel, int fromNewsId);
     }
 }

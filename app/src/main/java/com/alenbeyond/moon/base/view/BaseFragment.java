@@ -11,7 +11,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.alenbeyond.moon.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,7 +23,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements IBaseView {
 
     private ProgressDialog mProgressDialog;
-    private Toast mToast;
     public Context mContext;
     private Unbinder unbinder;
 
@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(getUserVisibleHint()) {
+        if (getUserVisibleHint()) {
             isVisible = true;
             onVisible();
         } else {
@@ -103,18 +103,13 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     protected void showToastMessage(String message) {
         if (!TextUtils.isEmpty(message)) {
-            if (mToast == null) {
-                mToast = Toast.makeText(mContext, "", Toast.LENGTH_SHORT);
-            }
-            mToast.setText(message);
-            mToast.show();
+            ToastUtils.showShortToast(mContext, message);
         }
     }
 
     protected void showToastMessage(@StringRes int messageId) {
         if (messageId != 0) {
-            String message = mContext.getResources().getString(messageId);
-            showToastMessage(message);
+            ToastUtils.showShortToast(mContext, messageId);
         }
     }
 
