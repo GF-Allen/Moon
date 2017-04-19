@@ -1,6 +1,5 @@
-package com.alenbeyond.moon.model;
+package com.alenbeyond.moon.model.Subscribe;
 
-import com.alenbeyond.moon.base.presenter.BasePresenter;
 import com.alenbeyond.moon.base.view.IBaseView;
 
 import rx.Subscriber;
@@ -11,36 +10,35 @@ import rx.Subscriber;
 
 public abstract class MoonSubscribe<T> extends Subscriber<T> {
 
-    private BasePresenter mPresenter;
     private IBaseView mView;
 
-    public MoonSubscribe(BasePresenter presenter, IBaseView view) {
+    public MoonSubscribe(IBaseView view) {
         this.mView = view;
-        this.mPresenter = presenter;
     }
 
     @Override
     public void onStart() {
-        mView.showProgressDialog(null, "");
     }
 
     @Override
     public void onCompleted() {
-        mView.dismissProgressDialog();
     }
 
     @Override
     public void onError(Throwable e) {
         mView.showMessage(e.getMessage());
-        mView.dismissProgressDialog();
+        _onError(e);
     }
 
     @Override
     public void onNext(T result) {
-        mPresenter.mRefreshTime = System.currentTimeMillis();
-        onJesNext(result);
+        _onSuccess(result);
     }
 
-    public abstract void onJesNext(T t);
+    public abstract void _onSuccess(T t);
+
+    public void _onError(Throwable e) {
+
+    }
 
 }

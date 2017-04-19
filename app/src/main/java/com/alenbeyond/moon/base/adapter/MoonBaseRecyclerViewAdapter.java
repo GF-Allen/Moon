@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- *
  * Created by allen on 2017/4/11.
  */
 
@@ -51,13 +50,16 @@ public abstract class MoonBaseRecyclerViewAdapter<T, VH extends RecyclerView.Vie
         this.validateUsersCollection(objectList);
         this.objectList.clear();
         this.objectList.addAll(objectList);
-        this.notifyDataSetChanged();
     }
 
     public void addData(List<T> objectList) {
         this.validateUsersCollection(objectList);
         this.objectList.addAll(objectList);
-        this.notifyDataSetChanged();
+    }
+
+    public void addDataToHead(List<T> objectList) {
+        this.validateUsersCollection(objectList);
+        this.objectList.addAll(0, objectList);//从起始插入
     }
 
     private void validateUsersCollection(Collection<T> collection) {

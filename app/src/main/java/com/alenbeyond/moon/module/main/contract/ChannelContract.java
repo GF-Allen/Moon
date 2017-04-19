@@ -13,9 +13,15 @@ import java.util.List;
 public class ChannelContract {
     public interface View extends ILoadDataView {
         void showData(List<News.NewsListBean> newsList, boolean isLoadMore);
+
+        void showEmptyData();
+
+        void showRefreshData(List<News.NewsListBean> newsList);
     }
 
     public interface Presenter extends ILoadDataPresenter<View> {
         void loadData(boolean loadMore, int channel, int fromNewsId);
+
+        void handRefreshData(List<News.NewsListBean> newsList, int firstId);
     }
 }

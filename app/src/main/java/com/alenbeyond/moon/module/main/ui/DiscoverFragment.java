@@ -33,6 +33,8 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
     private DiscoverPresenter mDiscoverPresenter;
     private VpDiscoverAdapter mAdapter;
 
+    private boolean isFirst = true;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +74,9 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
     @Override
     protected void onVisible() {
         ((MainActivity) getActivity()).hideTitleBar();
-        mDiscoverPresenter.getChannel();
+        if (isFirst) {
+            mDiscoverPresenter.getChannel();
+        }
     }
 
     @Override
@@ -83,6 +87,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
 
     @Override
     public void showChannel(List<Channel.ChannelListBean.ChannelBeans> channels) {
+        isFirst = false;
         mAdapter = new VpDiscoverAdapter(mContext, channels);
         mVpDiscover.setOffscreenPageLimit(channels.size());
         mVpDiscover.setAdapter(mAdapter);

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +17,7 @@ import com.alenbeyond.moon.module.main.adapter.RvChannelAdapter;
 import com.alenbeyond.moon.module.main.contract.ChannelContract;
 import com.alenbeyond.moon.module.main.presenter.ChannelPresenter;
 import com.alenbeyond.moon.utils.ToastUtils;
+import com.alenbeyond.moon.widget.LoadMoreRecyclerView;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 public class ChannelPager extends LinearLayout implements ChannelContract.View {
 
     @BindView(R.id.rv_channel)
-    RecyclerView mRvChannel;
+    LoadMoreRecyclerView mRvChannel;
     @BindView(R.id.srl_loading)
     SwipeRefreshLayout mSrlLoading;
 
@@ -41,9 +41,10 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
     private ChannelPresenter mPresenter;
     private RvChannelAdapter mAdapter;
 
-    private boolean isLoadMore = false;
+    private boolean isFirst = true;
 
     private Channel.ChannelListBean.ChannelBeans mChannel;
+    private int lastNewsId = -1;
 
     public ChannelPager(Context context) {
         super(context);
@@ -56,6 +57,7 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
         ButterKnife.bind(view);
         mPresenter = new ChannelPresenter();
         mPresenter.attachView(this);
+
         mSrlLoading.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
                 R.color.google_red,
@@ -63,18 +65,29 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
         mSrlLoading.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadData(isLoadMore, mChannel.getChannel(), -1);
+                mPresenter.loadData(false, mChannel.getChannel(), -1);
             }
         });
 
         mRvChannel.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvChannel.setLoadMoreEnable(true);
+        mRvChannel.isHasFooter(true);
+        mRvChannel.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMoreListener() {
+                mPresenter.loadData(true, mChannel.getChannel(), lastNewsId);
+            }
+        });
         mAdapter = new RvChannelAdapter(mContext);
         mRvChannel.setAdapter(mAdapter);
     }
 
     public void loadData(Channel.ChannelListBean.ChannelBeans channelBeans) {
         this.mChannel = channelBeans;
-        mPresenter.loadData(isLoadMore, channelBeans.getChannel(), -1);
+        if (isFirst) {
+            mSrlLoading.setRefreshing(true);
+            mPresenter.loadData(false, channelBeans.getChannel(), -1);
+        }
     }
 
     @Override
@@ -117,21 +130,50 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
 
     @Override
     public void showData(List<News.NewsListBean> newsList, boolean isLoadMore) {
+        isFirst = false;
+        lastNewsId = newsList.get(newsList.size() - 1).getNewsBean().getId();
         if (isLoadMore) {
             mAdapter.addData(newsList);
-        } else {
-            mAdapter.setObjectList(newsList);
+        } else {//取到最新的数据且本地没加载的添加
+            if (mAdapter.getObjectList().size() > 0) {
+                int firstId = mAdapter.getObjectList().get(0).getNewsBean().getId();
+                mPresenter.handRefreshData(newsList, firstId);
+            } else {
+                showRefreshData(newsList);
+            }
+        }
+        mRvChannel.notifyData();
+    }
+
+    /**
+     * 刷新出来的添加到前面
+     *
+     * @param newsList
+     */
+    public void showRefreshData(List<News.NewsListBean> newsList) {
+        mAdapter.addDataToHead(newsList);
+        mRvChannel.notifyData();
+    }
+
+    @Override
+    public void showEmptyData() {
+        showMessage("没有数据了");
+        mRvChannel.notifyData();
+    }
+
+
+    @Override
+    public void showLoading() {
+        if (!mSrlLoading.isRefreshing()) {
+            mSrlLoading.setRefreshing(true);
         }
     }
 
     @Override
-    public void showLoading() {
-        mSrlLoading.setRefreshing(true);
-    }
-
-    @Override
     public void hideLoading() {
-        mSrlLoading.setRefreshing(false);
+        if (mSrlLoading.isRefreshing()) {
+            mSrlLoading.setRefreshing(false);
+        }
     }
 
     @Override

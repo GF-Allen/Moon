@@ -4,4 +4,5 @@
     <string name="home">首页</string>
     <string name="discover">发现</string>
     <string name="collect">收藏</string>
+    <string name="loadMore">加载更多…</string>
 </resources>

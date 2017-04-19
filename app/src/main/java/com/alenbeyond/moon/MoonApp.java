@@ -24,6 +24,7 @@ public class MoonApp extends Application {
         super.onCreate();
         sMoonApp = this;
         getRetrofitClient();
+        
 
         //日志打印
         KLog.init(BuildConfig.DEBUG, "Moon");

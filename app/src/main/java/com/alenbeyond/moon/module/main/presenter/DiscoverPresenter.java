@@ -1,7 +1,7 @@
 package com.alenbeyond.moon.module.main.presenter;
 
 import com.alenbeyond.moon.base.presenter.BasePresenter;
-import com.alenbeyond.moon.model.MoonSubscribe;
+import com.alenbeyond.moon.model.Subscribe.MoonSubscribe;
 import com.alenbeyond.moon.model.bean.Channel;
 import com.alenbeyond.moon.module.main.contract.DiscoverContract;
 import com.alenbeyond.moon.module.main.model.DiscoverModel;
@@ -18,19 +18,17 @@ public class DiscoverPresenter extends BasePresenter<DiscoverContract.View> impl
 
     @Override
     public void getChannel() {
-        if (isNeedLoadData(false)) {
-            Subscription subscribe = DiscoverModel.getInstance().getChannel()
-                    .subscribe(new MoonSubscribe<List<Channel.ChannelListBean.ChannelBeans>>(this, mView) {
-                        @Override
-                        public void onJesNext(List<Channel.ChannelListBean.ChannelBeans> channels) {
-                            if (channels != null && channels.size() > 0) {
-                                mView.showChannel(channels);
-                            } else {
-                                mView.showMessage("获取数据失败");
-                            }
+        Subscription subscribe = DiscoverModel.getInstance().getChannel()
+                .subscribe(new MoonSubscribe<List<Channel.ChannelListBean.ChannelBeans>>(mView) {
+                    @Override
+                    public void _onSuccess(List<Channel.ChannelListBean.ChannelBeans> channels) {
+                        if (channels != null && channels.size() > 0) {
+                            mView.showChannel(channels);
+                        } else {
+                            mView.showMessage("获取数据失败");
                         }
-                    });
-            mSubscriptions.add(subscribe);
-        }
+                    }
+                });
+        mSubscriptions.add(subscribe);
     }
 }

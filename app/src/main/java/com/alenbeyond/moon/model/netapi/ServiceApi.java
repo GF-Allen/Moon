@@ -3,7 +3,6 @@ package com.alenbeyond.moon.model.netapi;
 import com.alenbeyond.moon.model.bean.Channel;
 import com.alenbeyond.moon.model.bean.News;
 
-import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -29,5 +28,5 @@ public interface ServiceApi {
      * @return
      */
     @GET("/news/newsList.api")
-    Observable<Response<News>> getNewsByChannel(@Query("channel") int channel, @Query("fromNewsId") int fromNewsId);
+    Observable<News> getNewsByChannel(@Query("channel") int channel, @Query("fromNewsId") int fromNewsId);
 }

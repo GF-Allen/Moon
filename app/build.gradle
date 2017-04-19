@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
@@ -33,6 +34,7 @@ dependencies {
     compile "com.android.support:cardview-v7:${libs.supportVersion}"
     compile "com.android.support:support-v13:${libs.supportVersion}"
     compile "com.android.support:recyclerview-v7:${libs.supportVersion}"
+    compile "jp.wasabeef:recyclerview-animators:${libs.rv_animators}"
 
     /**
      * butterknife
