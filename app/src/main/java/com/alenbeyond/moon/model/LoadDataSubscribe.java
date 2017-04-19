@@ -9,11 +9,11 @@ import rx.Subscriber;
  * Created by Allen on 2017/4/18.
  */
 
-public abstract class LoadDataSubsrcibe<T> extends Subscriber<T> {
+public abstract class LoadDataSubscribe<T> extends Subscriber<T> {
     private BaseLoadDataPresenter mPresenter;
     private ILoadDataView mView;
 
-    public LoadDataSubsrcibe(BaseLoadDataPresenter presenter, ILoadDataView view) {
+    public LoadDataSubscribe(BaseLoadDataPresenter presenter, ILoadDataView view) {
         this.mView = view;
         this.mPresenter = presenter;
     }

@@ -1,7 +1,7 @@
 package com.alenbeyond.moon.module.main.presenter;
 
 import com.alenbeyond.moon.base.presenter.BaseLoadDataPresenter;
-import com.alenbeyond.moon.model.LoadDataSubsrcibe;
+import com.alenbeyond.moon.model.LoadDataSubscribe;
 import com.alenbeyond.moon.model.bean.News;
 import com.alenbeyond.moon.module.main.contract.ChannelContract;
 import com.alenbeyond.moon.module.main.model.NewsMode;
@@ -30,7 +30,7 @@ public class ChannelPresenter extends BaseLoadDataPresenter<ChannelContract.View
                         return news.getNewsList();
                     }
                 })
-                .subscribe(new LoadDataSubsrcibe<List<News.NewsListBean>>(this, mView) {
+                .subscribe(new LoadDataSubscribe<List<News.NewsListBean>>(this, mView) {
                     @Override
                     public void onJesNext(List<News.NewsListBean> newsList) {
                         mView.showData(newsList, isLoadMore);

@@ -54,7 +54,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
             public void onPageSelected(int position) {
                 Channel.ChannelListBean.ChannelBeans item = mAdapter.getItem(position);
                 ChannelPager pager = (ChannelPager) mVpDiscover.getChildAt(position);
-                pager.setChannelBeans(item);
+                pager.loadData(item);
             }
 
             @Override
@@ -87,7 +87,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
         mVpDiscover.setOffscreenPageLimit(channels.size());
         mVpDiscover.setAdapter(mAdapter);
         mTab.setupWithViewPager(mVpDiscover);
-        ((ChannelPager) mVpDiscover.getChildAt(0)).setChannelBeans(channels.get(0));
+        ((ChannelPager) mVpDiscover.getChildAt(0)).loadData(channels.get(0));
     }
 
 }

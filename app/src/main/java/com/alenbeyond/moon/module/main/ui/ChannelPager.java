@@ -72,7 +72,7 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
         mRvChannel.setAdapter(mAdapter);
     }
 
-    public void setChannelBeans(Channel.ChannelListBean.ChannelBeans channelBeans) {
+    public void loadData(Channel.ChannelListBean.ChannelBeans channelBeans) {
         this.mChannel = channelBeans;
         mPresenter.loadData(isLoadMore, channelBeans.getChannel(), -1);
     }
