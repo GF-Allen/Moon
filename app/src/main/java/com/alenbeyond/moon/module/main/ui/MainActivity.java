@@ -41,14 +41,17 @@ public class MainActivity extends BaseActivity {
                     case R.id.item_home:
                         mVpContent.setCurrentItem(0);
                         changeTitle(mTitles[0]);
+                        showTitleBar();
                         break;
                     case R.id.item_office:
                         mVpContent.setCurrentItem(1);
                         changeTitle(mTitles[1]);
+                        hideTitleBar();
                         break;
                     case R.id.item_me:
                         mVpContent.setCurrentItem(2);
                         changeTitle(mTitles[2]);
+                        showTitleBar();
                         break;
                 }
                 return false;
@@ -66,6 +69,11 @@ public class MainActivity extends BaseActivity {
                 mMenuItem = mNavigationView.getMenu().getItem(position);
                 mMenuItem.setChecked(true);
                 changeTitle(mTitles[position]);
+                if (position == 1) {
+                    hideTitleBar();
+                } else {
+                    showTitleBar();
+                }
             }
 
             @Override

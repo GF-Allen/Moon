@@ -14,7 +14,6 @@ import com.alenbeyond.moon.model.bean.Channel;
 import com.alenbeyond.moon.module.main.adapter.VpDiscoverAdapter;
 import com.alenbeyond.moon.module.main.contract.DiscoverContract;
 import com.alenbeyond.moon.module.main.presenter.DiscoverPresenter;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -73,10 +72,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        KLog.d(this.getClass().getSimpleName());
-        ((MainActivity) mActivity).hideTitleBar();
+    protected void onVisible() {
         if (isFirst) {
             mDiscoverPresenter.getChannel();
         }

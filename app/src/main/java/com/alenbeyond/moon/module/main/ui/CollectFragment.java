@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.alenbeyond.moon.R;
 import com.alenbeyond.moon.base.view.BaseFragment;
-import com.socks.library.KLog;
 
 /**
  * Created by Allen on 2017/4/17.
@@ -19,12 +18,5 @@ public class CollectFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return createView(inflater, container, R.layout.fragment_home);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        KLog.d(this.getClass().getSimpleName());
-        ((MainActivity) mActivity).showTitleBar();
     }
 }
