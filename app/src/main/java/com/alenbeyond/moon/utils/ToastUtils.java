@@ -1,8 +1,9 @@
 package com.alenbeyond.moon.utils;
 
-import android.content.Context;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
+
+import com.alenbeyond.moon.MoonApp;
 
 /**
  * Toast工具类
@@ -12,26 +13,28 @@ import android.widget.Toast;
 public class ToastUtils {
 
     private static Toast sToast;
+    private static MoonApp sMoonApp;
 
-    public static void showShortToast(Context context, String msg) {
-        showToast(context, msg, Toast.LENGTH_SHORT);
+    public static void showShortToast(String msg) {
+        showToast(msg, Toast.LENGTH_SHORT);
     }
 
-    public static void showShortToast(Context context, @StringRes int msg) {
-        showShortToast(context, context.getString(msg));
+    public static void showShortToast(@StringRes int msg) {
+        showShortToast(sMoonApp.getString(msg));
     }
 
-    public static void showLongToast(Context context, String msg) {
-        showToast(context, msg, Toast.LENGTH_LONG);
+    public static void showLongToast(String msg) {
+        showToast(msg, Toast.LENGTH_LONG);
     }
 
-    public static void showLongToast(Context context, @StringRes int msg) {
-        showShortToast(context, context.getString(msg));
+    public static void showLongToast(@StringRes int msg) {
+        showShortToast(sMoonApp.getString(msg));
     }
 
-    private static void showToast(Context context, String msg, int duration) {
+    private static void showToast(String msg, int duration) {
         if (sToast == null) {
-            sToast = Toast.makeText(context, msg, duration);
+            sMoonApp = MoonApp.getInstance();
+            sToast = Toast.makeText(sMoonApp, msg, duration);
         } else {
             sToast.setText(msg);
         }

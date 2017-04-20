@@ -14,6 +14,7 @@ import com.alenbeyond.moon.model.bean.Channel;
 import com.alenbeyond.moon.module.main.adapter.VpDiscoverAdapter;
 import com.alenbeyond.moon.module.main.contract.DiscoverContract;
 import com.alenbeyond.moon.module.main.presenter.DiscoverPresenter;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -72,8 +73,10 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
     }
 
     @Override
-    protected void onVisible() {
-        ((MainActivity) getActivity()).hideTitleBar();
+    public void onResume() {
+        super.onResume();
+        KLog.d(this.getClass().getSimpleName());
+        ((MainActivity) mActivity).hideTitleBar();
         if (isFirst) {
             mDiscoverPresenter.getChannel();
         }
@@ -88,7 +91,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverContract.V
     @Override
     public void showChannel(List<Channel.ChannelListBean.ChannelBeans> channels) {
         isFirst = false;
-        mAdapter = new VpDiscoverAdapter(mContext, channels);
+        mAdapter = new VpDiscoverAdapter(mActivity, channels);
         mVpDiscover.setOffscreenPageLimit(channels.size());
         mVpDiscover.setAdapter(mAdapter);
         mTab.setupWithViewPager(mVpDiscover);

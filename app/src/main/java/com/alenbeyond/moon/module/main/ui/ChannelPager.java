@@ -92,12 +92,12 @@ public class ChannelPager extends LinearLayout implements ChannelContract.View {
 
     @Override
     public void showMessage(@NonNull String message) {
-        ToastUtils.showShortToast(mContext, message);
+        ToastUtils.showShortToast(message);
     }
 
     @Override
     public void showMessage(@StringRes int messageId) {
-        ToastUtils.showShortToast(mContext, messageId);
+        ToastUtils.showShortToast(messageId);
     }
 
     @Override

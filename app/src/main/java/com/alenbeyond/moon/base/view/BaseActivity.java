@@ -245,7 +245,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     protected void showToastMessage(String message) {
         if (!TextUtils.isEmpty(message)) {
-            ToastUtils.showShortToast(this, message);
+            ToastUtils.showShortToast(message);
         }
     }
 

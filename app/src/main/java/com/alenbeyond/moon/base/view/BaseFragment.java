@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements IBaseView {
 
     private ProgressDialog mProgressDialog;
-    public Context mContext;
+    public Activity mActivity;
     private Unbinder unbinder;
 
     protected boolean isVisible;
@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mContext = activity;
+        mActivity = activity;
     }
 
     protected View createView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @LayoutRes int layoutId) {
@@ -78,7 +78,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void showProgressDialog(String title, String message, boolean canCancel, boolean canCancelTouchOustSide) {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(mContext);
+            mProgressDialog = new ProgressDialog(mActivity);
         }
         mProgressDialog.setTitle(title);
         mProgressDialog.setMessage(message);
@@ -103,13 +103,13 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     protected void showToastMessage(String message) {
         if (!TextUtils.isEmpty(message)) {
-            ToastUtils.showShortToast(mContext, message);
+            ToastUtils.showShortToast(message);
         }
     }
 
     protected void showToastMessage(@StringRes int messageId) {
         if (messageId != 0) {
-            ToastUtils.showShortToast(mContext, messageId);
+            ToastUtils.showShortToast(messageId);
         }
     }
 
@@ -125,7 +125,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     @Override
     public Context getContext() {
-        return mContext;
+        return mActivity;
     }
 
     protected void changeTitle(String title) {
